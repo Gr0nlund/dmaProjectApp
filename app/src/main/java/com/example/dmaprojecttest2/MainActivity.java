@@ -9,12 +9,13 @@ import android.os.Bundle;
 import com.example.dmaprojecttest2.Adapter.FragmentAdapter;
 import com.example.dmaprojecttest2.Fragments.MapsFragment;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
+
 
 
     @Override
@@ -23,12 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
 
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(fragmentAdapter);
 
-        tabLayout.setupWithViewPager(viewPager);
     }
 }

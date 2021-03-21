@@ -8,7 +8,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.tabs.TabLayout
+
+
+    <!--<com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -18,9 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <!--<fragment
+    <fragment
         android:id="@+id/fragment"
         android:name="com.example.dmaprojecttest2.Fragments.MapsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />-->
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.dmaprojecttest2.Fragments.MapsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
