@@ -82,6 +82,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_baseline_accessible_forward_24)));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
     }
+    //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
