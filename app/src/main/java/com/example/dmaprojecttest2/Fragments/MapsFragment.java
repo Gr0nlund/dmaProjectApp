@@ -25,9 +25,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback {
+public class MapsFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static MapsFragment INSTANCE = null;
     View view;
@@ -70,18 +71,33 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    private Marker myMarker;
     LatLng aaHavn = new LatLng(57.047708,9.930646);
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
         map = googleMap;
-        googleMap.addMarker(new MarkerOptions()
+
+        googleMap.setOnMarkerClickListener(this);
+
+        myMarker = googleMap.addMarker(new MarkerOptions()
                 .position(aaHavn)
                 .title("Molok 1")
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_baseline_accessible_forward_24)));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
     }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        if (marker.equals(myMarker))
+        {
+            //handle click here
+        }
+        return true;
+    }
+
     //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
