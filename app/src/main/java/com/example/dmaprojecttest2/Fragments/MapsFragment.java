@@ -89,16 +89,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     }
 
     @Override
-    public boolean onMarkerClick(final Marker marker) {
+    public boolean onMarkerClick(Marker marker) {
 
         if (marker.equals(myMarker))
         {
             //handle click here
         }
-        return true;
+        return false;
     }
 
     //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon
+    //needed to get vector icon from res/drawable
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());

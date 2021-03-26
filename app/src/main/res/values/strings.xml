@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">dmaProjectTest2</string>
+
+    <string-array name="SortingTypes">
+        <item>Restaffald</item>
+        <item>Papir &amp; pap</item>
+        <item>Plast &amp; metal</item>
+        <item>Glas</item>
+        <item>Minielektronik</item>
+        <item>Stort affald</item>
+        <item>Elpærer</item>
+        <item>Farligt affald</item>
+        <item>Batterier</item>
+    </string-array>
+
+
 </resources>
