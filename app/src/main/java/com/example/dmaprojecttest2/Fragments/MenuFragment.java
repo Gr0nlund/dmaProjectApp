@@ -48,7 +48,7 @@ public class MenuFragment extends Fragment {
         recyclerView = recyclerView.findViewById(R.id.recyclerView);
         sortingTypes = getResources().getStringArray(R.array.SortingTypes);
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(context, sortingTypes, images);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(sortingTypes, images);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }

@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.example.dmaprojecttest2.Fragments.MapsFragment;
+import com.example.dmaprojecttest2.Fragments.TestFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
 // Complete the changes added above
         ft.commit();
 
-        /*FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
 // Replace the contents of the container with the new fragment
         ft2.replace(R.id.frameLayout_menu, new TestFragment());
 // or ft.add(R.id.your_placeholder, new FooFragment());
 // Complete the changes added above
-        ft2.commit();*/
+        ft2.commit();
 
     }
 }
