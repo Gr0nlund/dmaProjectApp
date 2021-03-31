@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,20 +33,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    private static MapsFragment INSTANCE = null;
     View view;
     GoogleMap map;
     MapView mapView;
 
     public MapsFragment(){
 
-    }
-
-    public static MapsFragment getINSTANCE(){
-        if(INSTANCE == null){
-            INSTANCE = new MapsFragment();
-        }
-        return INSTANCE;
     }
 
     @Override
@@ -53,8 +48,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.fragment_maps,container,false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        try{
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapsView);
+            mapFragment.getMapAsync(MapsFragment.this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return view;
     }
 
@@ -84,7 +87,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         myMarker = googleMap.addMarker(new MarkerOptions()
                 .position(aaHavn)
                 .title("Molok 1")
-                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_baseline_accessible_forward_24)));
+                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_baseline_delete_24)));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
     }
 
@@ -94,6 +97,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         if (marker.equals(myMarker))
         {
             //handle click here
+            MainActivity.createMenuFragment(view);
         }
         return false;
     }

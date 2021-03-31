@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dmaprojecttest2.Fragments.MenuFragment;
 import com.example.dmaprojecttest2.R;
 
+/*
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,8 +63,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return images.length;
     }
 }
+*/
 
-/*
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
 
     String[] types;
@@ -106,4 +108,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 }
-*/
+
