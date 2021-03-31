@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
+import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 
 public class MenuFragment extends Fragment {
@@ -24,11 +28,25 @@ public class MenuFragment extends Fragment {
     RecyclerView recyclerView;
     View view;
 
-    public MenuFragment(){
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        view = inflater.inflate(R.layout.fragment_menu, container, false);
+        // 1. get a reference to recyclerView
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView1);
+
+        // 2. set layoutManger
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(context, sortingTypes, images);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        return view;
     }
 
-    @Override
+    /*@Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
@@ -37,16 +55,16 @@ public class MenuFragment extends Fragment {
 
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(context, sortingTypes, images);
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-    }
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }*/
 
-    @Override
+    /*@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_menu,container,false);
+        view = inflater.inflate(R.layout.fragment_menu,container,false);
         recyclerView = view.findViewById(R.id.recyclerView1);
-        //context = this.getContext();
+        context = view.getContext();
         return view;
-    }
+    }*/
 
     /*
     private static MenuFragment INSTANCE;

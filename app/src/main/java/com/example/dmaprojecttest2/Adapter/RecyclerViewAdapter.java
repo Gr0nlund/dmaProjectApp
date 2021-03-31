@@ -78,6 +78,52 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         images = img;
     }
 
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        ImageView imageView;
+
+        public RecyclerViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.textView2);
+            //imageView = itemView.findViewById(R.id.imageViewSortType);
+        }
+    }
+
+    @Override
+    public int getItemViewType(final int position) {
+        return R.layout.row;
+    }
+
+    @NonNull
+    @Override
+    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+        return new RecyclerViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+        holder.textView.setText(types[position]);
+    }
+
+    @Override
+    public int getItemCount() {
+        return types.length;
+    }
+}
+
+    /*public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        ImageView imageView;
+
+        public RecyclerViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.randomText);
+            //imageView = itemView.findViewById(R.id.imageViewSortType);
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -96,16 +142,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return images.length;
     }
-
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-        ImageView imageView;
-
-        public RecyclerViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.textViewSortType);
-            imageView = itemView.findViewById(R.id.imageViewSortType);
-        }
-    }
-}
+}*/
 
