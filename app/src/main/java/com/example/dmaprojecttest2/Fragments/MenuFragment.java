@@ -1,35 +1,50 @@
 package com.example.dmaprojecttest2.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
-import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
-import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
+import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
+
 
 public class MenuFragment extends Fragment {
 
-    String[] sortingTypes = getResources().getStringArray(R.array.SortingTypes);
     int[] images = {R.drawable.restaffald,R.drawable.papir_pap,R.drawable.plast_metal,R.drawable.glas,R.drawable.minielektronik,R.drawable.stort_affald,R.drawable.elpaerer,R.drawable.farligt_affald,R.drawable.batterier};
+    private String[] types = {"Restaffald","Papir & pap","Plast & metal","Glas","Minielektronik","Stort affald","Elpærer","Farligt affald","Batterier"};
 
-    RecyclerView recyclerView;
+    public static MenuFragment newInstance(){
+        return new MenuFragment();
+    }
 
-/*
-    *//*private static MenuFragment INSTANCE;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewMenu);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images);
+        recyclerView.setAdapter(adapter);
+
+        return view;
+    }
+
+    //String[] sortingTypes = getResources().getStringArray(R.array.SortingTypes);
+    //int[] images = {R.drawable.restaffald,R.drawable.papir_pap,R.drawable.plast_metal,R.drawable.glas,R.drawable.minielektronik,R.drawable.stort_affald,R.drawable.elpaerer,R.drawable.farligt_affald,R.drawable.batterier};
+
+    //RecyclerView recyclerView;
+
+    /*private static MenuFragment INSTANCE;
 
     public MenuFragment(){
 
@@ -83,7 +98,7 @@ public class MenuFragment extends Fragment {
 
     */
 
-    Context context;
+    /*Context context;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
@@ -104,9 +119,9 @@ public class MenuFragment extends Fragment {
 
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(sortingTypes, images);
         recyclerView.setAdapter(recyclerViewAdapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-    }
+    }*/
 
 
 }

@@ -5,10 +5,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 
-import com.example.dmaprojecttest2.Fragments.ItemFragment;
 import com.example.dmaprojecttest2.Fragments.MapsFragment;
 import com.example.dmaprojecttest2.Fragments.MenuFragment;
 
@@ -19,42 +20,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-// Replace the contents of the container with the new fragment
-        ft.replace(R.id.frameLayout_bigMaps, new MapsFragment());
-// or ft.add(R.id.your_placeholder, new FooFragment());
-// Complete the changes added above
-        ft.commit();
-
-        //createFragment();
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout_bigMaps,new MapsFragment())
+                .commitNow();
 
 
         /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 // Replace the contents of the container with the new fragment
-        ft.add(R.id.frameLayout_bigMaps, new MenuFragment());
+        ft.replace(R.id.frameLayout_bigMaps, new MapsFragment());
 // or ft.add(R.id.your_placeholder, new FooFragment());
 // Complete the changes added above
         ft.commit();*/
-    }
 
 
-    public void createFragment(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-// Replace the contents of the container with the new fragment
-        ft.replace(R.id.frameLayout_bigMaps, new MenuFragment());
-// or ft.add(R.id.your_placeholder, new FooFragment());
-// Complete the changes added above
-        ft.commit();
     }
 
     public static void createMenuFragment(View view) {
+
         FragmentActivity activity = (FragmentActivity)view.getContext();
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft2 = manager.beginTransaction();
 // Replace the contents of the container with the new fragment
-        ft2.replace(R.id.frameLayout_menu, new ItemFragment());
+        ft2.replace(R.id.frameLayout_menu, MenuFragment.newInstance());
 // or ft.add(R.id.your_placeholder, new FooFragment());
 // Complete the changes added above
         ft2.commit();
