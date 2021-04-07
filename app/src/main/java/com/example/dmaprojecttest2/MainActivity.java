@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import com.example.dmaprojecttest2.Fragments.MapsFragment;
 import com.example.dmaprojecttest2.Fragments.MenuFragment;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     static MapsFragment mapsFragment = new MapsFragment();
@@ -41,14 +43,18 @@ public class MainActivity extends AppCompatActivity {
         ft2.commit();
 
         //moves mapsFragment from one frameLayout to another when it opens the menu
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.remove(mapsFragment);
-        Fragment newInstance = recreateFragment(mapsFragment);
-        ft.add(R.id.frameLayout_smallMaps, newInstance);
-        ft.commit();
+        //but only if it is not already in frameLayout_smallMaps
+        if(manager.findFragmentById(R.id.frameLayout_smallMaps) == null){
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.remove(mapsFragment);
+            Fragment newInstance = recreateFragment(mapsFragment);
+            ft.add(R.id.frameLayout_smallMaps, newInstance);
+            ft.commit();
+        }
     }
 
     //adapted from https://stackoverflow.com/questions/9906254/illegalstateexception-cant-change-container-id-of-fragment
+    //used to recreate mapsFragment when moving it from one frameLayout to another
     private static Fragment recreateFragment(Fragment f){
         try {
             FragmentActivity activity = (FragmentActivity) f.getContext();
@@ -64,5 +70,14 @@ public class MainActivity extends AppCompatActivity {
         {
             throw new RuntimeException("Cannot reinstantiate fragment " + f.getClass().getName(), e);
         }
+    }
+
+    //destroys the menuFragment when it is closed or a new one is opened
+    public static void destroyMenuFragment(View view){
+        FragmentActivity activity = (FragmentActivity)view.getContext();
+        FragmentManager manager = activity.getSupportFragmentManager();
+        FragmentTransaction ft3 = manager.beginTransaction();
+        ft3.remove(Objects.requireNonNull(manager.findFragmentById(R.id.frameLayout_menu)));
+        ft3.commit();
     }
 }

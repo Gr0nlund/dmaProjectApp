@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
@@ -86,7 +88,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         myMarker = googleMap.addMarker(new MarkerOptions()
                 .position(aaHavn)
                 .title("Molok 1")
-                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_baseline_delete_24)));
+                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_dumpster)));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
     }
 
@@ -96,6 +98,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         if (marker.equals(myMarker))
         {
             //handle click here
+            FragmentActivity activity = (FragmentActivity)view.getContext();
+            FragmentManager manager = activity.getSupportFragmentManager();
+
+            if (manager.findFragmentById(R.id.frameLayout_menu) != null) {
+                MainActivity.destroyMenuFragment(view);
+            }
             MainActivity.createMenuFragment(view);
         }
         return false;
