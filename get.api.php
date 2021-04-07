@@ -3,10 +3,6 @@
     $dbUsername = 'damibfko_josj';
     $dbPassword = 'Glubben13!';
     $dbName = 'damibfko_DMA';
-    // define('dbServername', 'web1.netgiganten.dk');
-    // define('dbUsername', 'damibfko_josj');
-    // define('dbPassword', 'Glubben13!');
-    // define('dbName', 'damibfko_DMA');
   
     // Create connection
     $conn = new mysqli($dbServername, $dbUsername, $dbPassword, $dbName); 
