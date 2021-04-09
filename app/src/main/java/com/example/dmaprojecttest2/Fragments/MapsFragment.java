@@ -106,7 +106,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
             }
             MainActivity.createMenuFragment(view);
         }
-        return false;
+        return true;
     }
 
     //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon

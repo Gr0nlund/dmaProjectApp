@@ -1,11 +1,14 @@
 package com.example.dmaprojecttest2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +19,12 @@ import com.example.dmaprojecttest2.Fragments.MenuFragment;
 
 import java.util.Objects;
 
+import static com.google.android.material.internal.ContextUtils.getActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     static MapsFragment mapsFragment = new MapsFragment();
+    static MapsFragment mapsFragmentS = new MapsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +53,30 @@ public class MainActivity extends AppCompatActivity {
         if(manager.findFragmentById(R.id.frameLayout_smallMaps) == null){
             FragmentTransaction ft = manager.beginTransaction();
             ft.remove(mapsFragment);
-            Fragment newInstance = recreateFragment(mapsFragment);
-            ft.add(R.id.frameLayout_smallMaps, newInstance);
+            mapsFragmentS = (MapsFragment) recreateFragment(mapsFragment);
+            ft.add(R.id.frameLayout_smallMaps, mapsFragmentS);
             ft.commit();
         }
+    }
+
+    public static void backToMaps(View view){
+        FragmentActivity activity = (FragmentActivity)view.getContext();
+        FragmentManager manager = activity.getSupportFragmentManager();
+
+        FragmentTransaction ft4 = manager.beginTransaction();
+        ft4.remove(mapsFragmentS);
+        mapsFragment = (MapsFragment) recreateFragment(mapsFragmentS);
+        ft4.add(R.id.frameLayout_bigMaps, mapsFragment);
+        ft4.commit();
     }
 
     //adapted from https://stackoverflow.com/questions/9906254/illegalstateexception-cant-change-container-id-of-fragment
     //used to recreate mapsFragment when moving it from one frameLayout to another
     private static Fragment recreateFragment(Fragment f){
         try {
-            FragmentActivity activity = (FragmentActivity) f.getContext();
-            FragmentManager fManager = activity.getSupportFragmentManager();
+            //FragmentActivity activity = (FragmentActivity) f.getContext();
+            //FragmentManager fManager = activity.getSupportFragmentManager();
+            FragmentManager fManager = f.getActivity().getSupportFragmentManager();
             Fragment.SavedState savedState = fManager.saveFragmentInstanceState(f);
 
             Fragment newInstance = f.getClass().newInstance();
@@ -77,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentActivity activity = (FragmentActivity)view.getContext();
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft3 = manager.beginTransaction();
+
         ft3.remove(Objects.requireNonNull(manager.findFragmentById(R.id.frameLayout_menu)));
         ft3.commit();
     }
