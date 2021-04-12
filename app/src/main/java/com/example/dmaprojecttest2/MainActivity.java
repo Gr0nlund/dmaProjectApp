@@ -23,8 +23,7 @@ import static com.google.android.material.internal.ContextUtils.getActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    static MapsFragment mapsFragment = new MapsFragment();
-    static MapsFragment mapsFragmentS = new MapsFragment();
+    private static MapsFragment mapsFragment = new MapsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         if(manager.findFragmentById(R.id.frameLayout_smallMaps) == null){
             FragmentTransaction ft = manager.beginTransaction();
             ft.remove(mapsFragment);
-            mapsFragmentS = (MapsFragment) recreateFragment(mapsFragment);
-            ft.add(R.id.frameLayout_smallMaps, mapsFragmentS);
+            mapsFragment = (MapsFragment) recreateFragment(mapsFragment);
+            ft.add(R.id.frameLayout_smallMaps, mapsFragment);
             ft.commit();
         }
     }
@@ -64,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = activity.getSupportFragmentManager();
 
         FragmentTransaction ft4 = manager.beginTransaction();
-        ft4.remove(mapsFragmentS);
-        mapsFragment = (MapsFragment) recreateFragment(mapsFragmentS);
+        ft4.remove(mapsFragment);
+        mapsFragment = (MapsFragment) recreateFragment(mapsFragment);
         ft4.add(R.id.frameLayout_bigMaps, mapsFragment);
         ft4.commit();
     }
