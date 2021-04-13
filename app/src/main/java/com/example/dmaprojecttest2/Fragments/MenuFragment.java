@@ -67,7 +67,7 @@ public class MenuFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images, new ClickListener() {
             @Override
             public void onPositionClicked(int position) {
-                Toast.makeText(getContext(), "REPORT PRESSED " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "REPORT PRESSED " + position, Toast.LENGTH_SHORT).show();
                 dumpsterType = "Rest";
                 dumpsterId = 5;
                 new HTTPReqTask(userId,dumpsterId,dumpsterType).execute();
