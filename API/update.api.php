@@ -1,5 +1,5 @@
 <?php
-
+    
     $dbServername = 'web1.netgiganten.dk';
     $dbUsername = 'damibfko_josj';
     $dbPassword = 'Glubben13!';
@@ -8,9 +8,9 @@
     // Create connection
     $conn = new mysqli($dbServername, $dbUsername, $dbPassword, $dbName); 
     
-    $User = $_POST['User'];
-    $Dumpster_ID = $_POST['DumpsterID'];
-    $Dumpster_Type = $_POST['DumpsterType'];
+    $User = $_GET['User'];
+    $Dumpster_ID = $_GET['DumpsterID'];
+    $Dumpster_Type = $_GET['DumpsterType'];
     $Date = date("d-m-Y");
     
     //https://www.solskov-jensen.dk/API/update.api.php?User=1&DumpsterID=1&DumpsterType=Rest
@@ -46,12 +46,12 @@
             }
             $result->close();
         } else {
-            echo "Fail";
+            http_response_code(304);
         }
         $conn->close();
         echo "Rows= " . $rows . " and row = " . $row;
-
+        http_response_code(200);
     } else {
-        header("location: update.api.php?error=emptyget");
+        http_response_code(400);
     }
 ?>
