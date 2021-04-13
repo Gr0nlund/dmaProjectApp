@@ -19,6 +19,11 @@ import com.example.dmaprojecttest2.Interface.ClickListener;
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
+import com.example.dmaprojecttest2.db.HTTPReqTask;
+
+import java.net.MalformedURLException;
+
+import static com.example.dmaprojecttest2.MainActivity.userId;
 
 
 public class MenuFragment extends Fragment {
@@ -26,7 +31,11 @@ public class MenuFragment extends Fragment {
     int[] images = {R.drawable.restaffald,R.drawable.papir_pap,R.drawable.plast_metal,R.drawable.glas,R.drawable.minielektronik,R.drawable.stort_affald,R.drawable.elpaerer,R.drawable.farligt_affald,R.drawable.batterier};
     private final String[] types = {"Restaffald","Papir & pap","Plast & metal","Glas","Minielektronik","Stort affald","Elpærer","Farligt affald","Batterier"};
 
-    public static MenuFragment newInstance(){
+    String userId = MainActivity.userId;
+    int dumpsterId;
+    String dumpsterType;
+
+    public static MenuFragment newInstance() {
         return new MenuFragment();
     }
 
@@ -58,7 +67,10 @@ public class MenuFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images, new ClickListener() {
             @Override
             public void onPositionClicked(int position) {
-                //should contain what to do went report button is clicked
+                Toast.makeText(getContext(), "REPORT PRESSED " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                dumpsterType = "Rest";
+                dumpsterId = 5;
+                new HTTPReqTask(userId,dumpsterId,dumpsterType).execute();
             }
 
         });

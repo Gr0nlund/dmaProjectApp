@@ -48,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private WeakReference<ClickListener> listenerRef;
+        private final WeakReference<ClickListener> listenerRef;
         ImageView img;
         TextView type;
         Button reportButton;
@@ -67,9 +67,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View v) {
 
-            if (reportButton.getId() == v.getId()) {
+            /*if (reportButton.getId() == v.getId()) {
                 Toast.makeText(v.getContext(), "REPORT PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-            }
+            }*/
             listenerRef.get().onPositionClicked(getAdapterPosition());
         }
     }

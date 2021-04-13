@@ -1,6 +1,5 @@
 package com.example.dmaprojecttest2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -8,28 +7,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.example.dmaprojecttest2.Fragments.MapsFragment;
 import com.example.dmaprojecttest2.Fragments.MenuFragment;
 
+import java.net.MalformedURLException;
 import java.util.Objects;
-
-import static com.google.android.material.internal.ContextUtils.getActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private static MapsFragment mapsFragment = new MapsFragment();
-    private static String userId;
+    public static String userId;
 
     @SuppressLint("HardwareIds")
     @Override
@@ -45,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    public static void createMenuFragment(View view) {
+    public static void createMenuFragment(View view) throws MalformedURLException {
         //creates the menu and places it in frameLayout
         //creating the menuFragment should take parameters for the specific site
         FragmentActivity activity = (FragmentActivity)view.getContext();
@@ -82,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
     //used to recreate mapsFragment when moving it from one frameLayout to another
     private static Fragment recreateFragment(Fragment f){
         try {
-            //FragmentActivity activity = (FragmentActivity) f.getContext();
-            //FragmentManager fManager = activity.getSupportFragmentManager();
             FragmentManager fManager = f.getActivity().getSupportFragmentManager();
             Fragment.SavedState savedState = fManager.saveFragmentInstanceState(f);
 

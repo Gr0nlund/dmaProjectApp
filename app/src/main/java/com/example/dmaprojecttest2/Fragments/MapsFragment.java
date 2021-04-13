@@ -32,6 +32,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.net.MalformedURLException;
+
 public class MapsFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     View view;
@@ -104,7 +106,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
             if (manager.findFragmentById(R.id.frameLayout_menu) != null) {
                 MainActivity.destroyMenuFragment(view);
             }
-            MainActivity.createMenuFragment(view);
+            try {
+                MainActivity.createMenuFragment(view);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
         return true;
     }
