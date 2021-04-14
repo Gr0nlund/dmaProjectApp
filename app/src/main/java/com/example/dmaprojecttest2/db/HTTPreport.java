@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import static java.security.AccessController.getContext;
 
-public class HTTPReqTask extends AsyncTask<Void, Void, Void> {
+public class HTTPreport extends AsyncTask<Void, Void, Void> {
 
     String userId;
     int dumpsterId;
@@ -32,7 +32,7 @@ public class HTTPReqTask extends AsyncTask<Void, Void, Void> {
     String url;
 
     //gets the parameters for url
-    public HTTPReqTask(String userId, int dumpsterId, String dumpsterType) {
+    public HTTPreport(String userId, int dumpsterId, String dumpsterType) {
         this.userId = userId;
         this.dumpsterId = dumpsterId;
         this. dumpsterType = dumpsterType;

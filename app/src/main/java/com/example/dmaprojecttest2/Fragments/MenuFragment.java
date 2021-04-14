@@ -1,6 +1,7 @@
 package com.example.dmaprojecttest2.Fragments;
 
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,20 @@ import com.example.dmaprojecttest2.Interface.ClickListener;
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
-import com.example.dmaprojecttest2.db.HTTPReqTask;
+import com.example.dmaprojecttest2.db.HTTPfetchType;
+import com.example.dmaprojecttest2.db.HTTPreport;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import java.net.MalformedURLException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static com.example.dmaprojecttest2.MainActivity.userId;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
 
 
 public class MenuFragment extends Fragment {
@@ -34,6 +44,7 @@ public class MenuFragment extends Fragment {
     String userId = MainActivity.userId;
     int dumpsterId;
     String dumpsterType;
+    String tingting;
 
     public static MenuFragment newInstance() {
         return new MenuFragment();
@@ -49,6 +60,12 @@ public class MenuFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                HTTPfetchType ting = new HTTPfetchType();
+                ting.execute();
+                tingting = ting.getData();
+                Toast.makeText(getContext(), tingting, Toast.LENGTH_SHORT).show();
+
                 FragmentActivity activity = (FragmentActivity)view.getContext();
                 FragmentManager manager = activity.getSupportFragmentManager();
 
@@ -70,7 +87,7 @@ public class MenuFragment extends Fragment {
                 Toast.makeText(getContext(), "REPORT PRESSED " + position, Toast.LENGTH_SHORT).show();
                 dumpsterType = "Rest";
                 dumpsterId = 5;
-                new HTTPReqTask(userId,dumpsterId,dumpsterType).execute();
+                new HTTPreport(userId,dumpsterId,dumpsterType).execute();
             }
 
         });
