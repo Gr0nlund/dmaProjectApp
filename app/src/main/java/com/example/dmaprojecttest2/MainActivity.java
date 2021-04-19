@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static MapsFragment mapsFragment = new MapsFragment();
     public static String userId;
+    public static String fetchTypeResult;
 
     @SuppressLint("HardwareIds")
     @Override

@@ -3,13 +3,12 @@ package com.example.dmaprojecttest2.Fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
+import com.example.dmaprojecttest2.db.HTTPfetchType;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -89,7 +89,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         myMarker = googleMap.addMarker(new MarkerOptions()
                 .position(aaHavn)
-                .title("Molok 1")
+                .title("1")
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_dumpster)));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
     }
@@ -99,6 +99,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         if (marker.equals(myMarker))
         {
+            HTTPfetchType asyncTask = new HTTPfetchType(myMarker.getTitle());
+            asyncTask.execute();
+
+            if(MainActivity.fetchTypeResult == null){
+                MainActivity.fetchTypeResult = "null";
+            }
+            Toast.makeText(getContext(), MainActivity.fetchTypeResult, Toast.LENGTH_SHORT).show();
+
             //handle click here
             FragmentActivity activity = (FragmentActivity)view.getContext();
             FragmentManager manager = activity.getSupportFragmentManager();

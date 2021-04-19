@@ -1,5 +1,6 @@
 package com.example.dmaprojecttest2.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
@@ -16,12 +17,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dmaprojecttest2.Interface.AsyncResponse;
 import com.example.dmaprojecttest2.Interface.ClickListener;
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
 import com.example.dmaprojecttest2.db.HTTPfetchType;
 import com.example.dmaprojecttest2.db.HTTPreport;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,8 +35,10 @@ import com.google.gson.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -44,7 +52,6 @@ public class MenuFragment extends Fragment {
     String userId = MainActivity.userId;
     int dumpsterId;
     String dumpsterType;
-    String tingting;
 
     public static MenuFragment newInstance() {
         return new MenuFragment();
@@ -60,12 +67,6 @@ public class MenuFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                HTTPfetchType ting = new HTTPfetchType();
-                ting.execute();
-                tingting = ting.getData();
-                Toast.makeText(getContext(), tingting, Toast.LENGTH_SHORT).show();
-
                 FragmentActivity activity = (FragmentActivity)view.getContext();
                 FragmentManager manager = activity.getSupportFragmentManager();
 
@@ -84,10 +85,10 @@ public class MenuFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images, new ClickListener() {
             @Override
             public void onPositionClicked(int position) {
-                Toast.makeText(getContext(), "REPORT PRESSED " + position, Toast.LENGTH_SHORT).show();
                 dumpsterType = "Rest";
                 dumpsterId = 5;
                 new HTTPreport(userId,dumpsterId,dumpsterType).execute();
+                Toast.makeText(getContext(), "REPORT SENT  " + position, Toast.LENGTH_SHORT).show();
             }
 
         });
