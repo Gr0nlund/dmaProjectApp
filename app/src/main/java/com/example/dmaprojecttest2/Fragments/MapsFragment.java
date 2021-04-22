@@ -89,7 +89,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         myMarker = googleMap.addMarker(new MarkerOptions()
                 .position(aaHavn)
-                .title("1")
+                .title("2")
                 .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_dumpster)));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
     }
