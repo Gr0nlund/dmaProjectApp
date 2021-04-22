@@ -15,13 +15,15 @@ import com.example.dmaprojecttest2.Fragments.MapsFragment;
 import com.example.dmaprojecttest2.Fragments.MenuFragment;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private static MapsFragment mapsFragment = new MapsFragment();
     public static String userId;
-    public static String fetchTypeResult;
+    public static List<String[]> fetchTypeResult;
 
     @SuppressLint("HardwareIds")
     @Override

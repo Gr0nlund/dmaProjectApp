@@ -36,7 +36,7 @@ import java.net.MalformedURLException;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    View view;
+    public static View view;
     GoogleMap map;
     MapView mapView;
 
@@ -99,16 +99,21 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         if (marker.equals(myMarker))
         {
+            //gets data from database. Everything else is done in the onPostExecute method
             HTTPfetchType asyncTask = new HTTPfetchType(myMarker.getTitle());
+            MenuFragment.dumpsterId = Integer.parseInt(myMarker.getTitle());
             asyncTask.execute();
 
-            if(MainActivity.fetchTypeResult == null){
-                MainActivity.fetchTypeResult = "null";
+            /*if(MainActivity.fetchTypeResult.get(0)[0] == null){
+                //MainActivity.fetchTypeResult.get(0)[0] = "null";
+                Toast.makeText(getContext(), "null", Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(getContext(), MainActivity.fetchTypeResult, Toast.LENGTH_SHORT).show();
+            else{
+                Toast.makeText(getContext(), MainActivity.fetchTypeResult.get(0)[0], Toast.LENGTH_SHORT).show();
+            }*/
 
             //handle click here
-            FragmentActivity activity = (FragmentActivity)view.getContext();
+            /*FragmentActivity activity = (FragmentActivity)view.getContext();
             FragmentManager manager = activity.getSupportFragmentManager();
 
             if (manager.findFragmentById(R.id.frameLayout_menu) != null) {
@@ -118,7 +123,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                 MainActivity.createMenuFragment(view);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         return true;
     }

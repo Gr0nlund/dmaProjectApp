@@ -15,14 +15,15 @@ import com.example.dmaprojecttest2.Interface.ClickListener;
 import com.example.dmaprojecttest2.R;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private final ClickListener listener;
-    private final String[] types;
-    private final int[] images;
+    private final List<String> types;
+    private final List<Integer> images;
 
-    public RecyclerViewAdapter(String[] sortingTypes, int[] img, ClickListener listener){
+    public RecyclerViewAdapter(List<String> sortingTypes, List<Integer> img, ClickListener listener){
         this.listener = listener;
         types = sortingTypes;
         images = img;
@@ -37,13 +38,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.type.setText(types[position]);
-        holder.img.setImageResource(images[position]);
+        holder.type.setText(types.get(position));
+        holder.img.setImageResource(images.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return types.length;
+        return types.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

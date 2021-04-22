@@ -41,16 +41,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MenuFragment extends Fragment {
 
-    int[] images = {R.drawable.restaffald,R.drawable.papir_pap,R.drawable.plast_metal,R.drawable.glas,R.drawable.minielektronik,R.drawable.stort_affald,R.drawable.elpaerer,R.drawable.farligt_affald,R.drawable.batterier};
-    private final String[] types = {"Restaffald","Papir & pap","Plast & metal","Glas","Minielektronik","Stort affald","Elpærer","Farligt affald","Batterier"};
+    //int[] images1 = {R.drawable.restaffald,R.drawable.papir_pap,R.drawable.plast_metal,R.drawable.glas,R.drawable.minielektronik,R.drawable.stort_affald,R.drawable.elpaerer,R.drawable.farligt_affald,R.drawable.batterier};
+    //private final String[] types1 = {"Restaffald","Papir & pap","Plast & metal","Glas","Minielektronik","Stort affald","Elpærer","Farligt affald","Batterier"};
+    private List<String> types = new ArrayList<>();
+    private List<Integer> images = new ArrayList<>();
 
     String userId = MainActivity.userId;
-    int dumpsterId;
+    public static int dumpsterId;
     String dumpsterType;
 
     public static MenuFragment newInstance() {
@@ -82,13 +85,19 @@ public class MenuFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        for(int i = 0;i < MainActivity.fetchTypeResult.size();i++){
+            types.add(MainActivity.fetchTypeResult.get(i)[0]);
+            String image = MainActivity.fetchTypeResult.get(i)[0];
+            int imageId = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
+            images.add(imageId);
+        }
+
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images, new ClickListener() {
             @Override
             public void onPositionClicked(int position) {
-                dumpsterType = "Rest";
-                dumpsterId = 5;
+                dumpsterType = types.get(position);
                 new HTTPreport(userId,dumpsterId,dumpsterType).execute();
-                Toast.makeText(getContext(), "REPORT SENT  " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Report sent for " + dumpsterType, Toast.LENGTH_SHORT).show();
             }
 
         });
