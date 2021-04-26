@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //used to go back to maps when back button is pressed
     public static void backToMaps(View view){
         FragmentActivity activity = (FragmentActivity)view.getContext();
         FragmentManager manager = activity.getSupportFragmentManager();

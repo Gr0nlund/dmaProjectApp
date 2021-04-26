@@ -29,13 +29,13 @@ import java.util.List;
 import static com.example.dmaprojecttest2.Fragments.MapsFragment.view;
 import static java.security.AccessController.getContext;
 
-public class HTTPfetchType extends AsyncTask<String,Void,List<String[]>> {
+public class DbFetchType extends AsyncTask<String,Void,List<String[]>> {
     //List<String[]> result = new ArrayList<>();
     String data;
     String dumpsterId;
 
     //gets the dumpsterId from the clicked marker
-    public HTTPfetchType(String dumpsterId){
+    public DbFetchType(String dumpsterId){
         this.dumpsterId = dumpsterId;
     }
 
@@ -87,7 +87,7 @@ public class HTTPfetchType extends AsyncTask<String,Void,List<String[]>> {
     public void onPostExecute(List<String[]> result) {
         MainActivity.fetchTypeResult = result;
 
-        Toast.makeText(view.getContext(), MainActivity.fetchTypeResult.get(0)[0], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(view.getContext(), result.get(0)[0], Toast.LENGTH_SHORT).show();
 
         FragmentActivity activity = (FragmentActivity) view.getContext();
         FragmentManager manager = activity.getSupportFragmentManager();

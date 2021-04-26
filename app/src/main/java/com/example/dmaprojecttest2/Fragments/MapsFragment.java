@@ -2,7 +2,9 @@ package com.example.dmaprojecttest2.Fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,12 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
-import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
-import com.example.dmaprojecttest2.db.HTTPfetchType;
+import com.example.dmaprojecttest2.db.DbFetchAll;
+import com.example.dmaprojecttest2.db.DbFetchType;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -32,13 +32,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.net.MalformedURLException;
-
 public class MapsFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     public static View view;
-    GoogleMap map;
+    public static GoogleMap map;
     MapView mapView;
+    public Context c = getActivity();
 
     public MapsFragment(){
 
@@ -77,9 +76,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         }
     }
 
-    private Marker myMarker;
-    LatLng aaHavn = new LatLng(57.047708,9.930646);
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
@@ -87,52 +83,31 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         googleMap.setOnMarkerClickListener(this);
 
-        myMarker = googleMap.addMarker(new MarkerOptions()
-                .position(aaHavn)
-                .title("2")
-                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_dumpster)));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(aaHavn, 18));
+        //coordinates for starting position of map... should be based on phone position
+        LatLng camStart = new LatLng(57.047692,9.931233);
+        MapsFragment.map.moveCamera(CameraUpdateFactory.newLatLngZoom(camStart, 16));
+
+        DbFetchAll asyncTask = new DbFetchAll();
+        asyncTask.execute();
+
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        //gets data from database. Everything else is done in the onPostExecute method
+        DbFetchType asyncTask = new DbFetchType(marker.getTitle());
+        MenuFragment.dumpsterId = Integer.parseInt(marker.getTitle());
+        Toast.makeText(MapsFragment.view.getContext(), marker.getTitle(), Toast.LENGTH_LONG).show();
+        asyncTask.execute();
 
-        if (marker.equals(myMarker))
-        {
-            //gets data from database. Everything else is done in the onPostExecute method
-            HTTPfetchType asyncTask = new HTTPfetchType(myMarker.getTitle());
-            MenuFragment.dumpsterId = Integer.parseInt(myMarker.getTitle());
-            asyncTask.execute();
-
-            /*if(MainActivity.fetchTypeResult.get(0)[0] == null){
-                //MainActivity.fetchTypeResult.get(0)[0] = "null";
-                Toast.makeText(getContext(), "null", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(getContext(), MainActivity.fetchTypeResult.get(0)[0], Toast.LENGTH_SHORT).show();
-            }*/
-
-            //handle click here
-            /*FragmentActivity activity = (FragmentActivity)view.getContext();
-            FragmentManager manager = activity.getSupportFragmentManager();
-
-            if (manager.findFragmentById(R.id.frameLayout_menu) != null) {
-                MainActivity.destroyMenuFragment(view);
-            }
-            try {
-                MainActivity.createMenuFragment(view);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }*/
-        }
         return true;
     }
 
     //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon
     //needed to get vector icon from res/drawable
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+    public static BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth()/2, vectorDrawable.getIntrinsicHeight()/2);
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);

@@ -1,8 +1,6 @@
 package com.example.dmaprojecttest2.Fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,30 +15,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dmaprojecttest2.Interface.AsyncResponse;
 import com.example.dmaprojecttest2.Interface.ClickListener;
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
-import com.example.dmaprojecttest2.db.HTTPfetchType;
-import com.example.dmaprojecttest2.db.HTTPreport;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.example.dmaprojecttest2.db.DbReport;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +76,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onPositionClicked(int position) {
                 dumpsterType = types.get(position);
-                new HTTPreport(userId,dumpsterId,dumpsterType).execute();
+                new DbReport(userId,dumpsterId,dumpsterType).execute();
                 Toast.makeText(getContext(), "Report sent for " + dumpsterType, Toast.LENGTH_SHORT).show();
             }
 
