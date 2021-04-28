@@ -45,6 +45,7 @@ public class MenuFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
+        //back button
         Button backButton = view.findViewById(R.id.button_back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        //recyclerView menu
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewMenu);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -68,13 +70,73 @@ public class MenuFragment extends Fragment {
         for(int i = 0;i < MainActivity.fetchTypeResult.size();i++){
             types.add(MainActivity.fetchTypeResult.get(i)[0]);
             String image = MainActivity.fetchTypeResult.get(i)[0];
-            int imageId = getContext().getResources().getIdentifier(image, "drawable", getContext().getPackageName());
+            int imageId = 0;
+            //switch handling image selection
+            switch(image.toLowerCase()) {
+                case "restaffald":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("restaffald_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("restaffald_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                case "pap & papir":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("pap_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("pap_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                case "plast & metal":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("plast_metal_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("plasta_metal_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                case "glas":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("glas_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("glas_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                case "batterier":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("batterier_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("batterier_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                case "stort affald":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("stort_affald_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("stort_affald_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                case "minielektronik":
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("minielektronik_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("minielektronik_red", "drawable", getContext().getPackageName());
+                    }
+                    break;
+                default:
+                    if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
+                        imageId = getContext().getResources().getIdentifier("questionmark_green", "drawable", getContext().getPackageName());
+                    } else {
+                        imageId = getContext().getResources().getIdentifier("questionmark_red", "drawable", getContext().getPackageName());
+                    }
+            }
             images.add(imageId);
+
         }
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images, new ClickListener() {
             @Override
             public void onPositionClicked(int position) {
+                //need to add if statement for when dumpsterType is full
                 dumpsterType = types.get(position);
                 new DbReport(userId,dumpsterId,dumpsterType).execute();
                 Toast.makeText(getContext(), "Report sent for " + dumpsterType, Toast.LENGTH_SHORT).show();

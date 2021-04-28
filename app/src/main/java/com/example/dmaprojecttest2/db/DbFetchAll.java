@@ -88,37 +88,36 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
     @Override
     public void onPostExecute(List<String[]> result) {
         //create all markers from db here
-
         List<double[]> arr = new ArrayList<>();
-        int max = 0;
+        int maxId = 0;
 
         //finds the max id value
         for (int i = 0; i < result.size(); i++) {
-            if (Integer.parseInt(result.get(i)[0]) > max) {
-                max = Integer.parseInt(result.get(i)[0]);
+            if (Integer.parseInt(result.get(i)[0]) > maxId) {
+                maxId = Integer.parseInt(result.get(i)[0]);
             }
         }
 
         //checks amount of full types at a site and creates a new List<Double[]> to make marker creation easier
-        for(int id = 1; id <= max; id++){
-            int check = 0;
-            int check2= 0;
+        for(int id = 1; id <= maxId; id++){
+            int fullAmount = 0;
+            int totalTypeAmount = 0;
             for(int i = 0; i < result.size(); i++){
                 if(Integer.parseInt(result.get(i)[0]) == id && Integer.parseInt(result.get(i)[3]) == 1){
-                    check++;
+                    fullAmount++;
                 }
                 if(Integer.parseInt(result.get(i)[0]) == id){
-                    check2++;
+                    totalTypeAmount++;
                 }
             }
             //only adds a dumpster once with amount of fullness/color
-            if(check == 0){
+            if(fullAmount == 0){
                 double[] row = {id,Double.parseDouble(result.get(id)[2]),Double.parseDouble(result.get(id)[1]),0};
                 arr.add(row);
-            } else if(check > 0 && check < check2){
+            } else if(fullAmount > 0 && fullAmount < totalTypeAmount){
                 double[] row = {id,Double.parseDouble(result.get(id)[2]),Double.parseDouble(result.get(id)[1]),1};
                 arr.add(row);
-            } else if(check == check2){
+            } else if(fullAmount == totalTypeAmount){
                 double[] row = {id,Double.parseDouble(result.get(id)[2]),Double.parseDouble(result.get(id)[1]),2};
                 arr.add(row);
             }
