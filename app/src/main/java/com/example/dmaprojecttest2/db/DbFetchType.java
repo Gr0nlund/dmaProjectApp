@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.dmaprojecttest2.Fragments.MapsFragment;
+import com.example.dmaprojecttest2.Fragments.MenuFragment;
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 import com.google.gson.JsonArray;

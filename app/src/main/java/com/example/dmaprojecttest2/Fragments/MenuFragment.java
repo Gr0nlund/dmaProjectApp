@@ -1,5 +1,6 @@
 package com.example.dmaprojecttest2.Fragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.dmaprojecttest2.Interface.ClickListener;
 import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 import com.example.dmaprojecttest2.Adapter.RecyclerViewAdapter;
+import com.example.dmaprojecttest2.db.DbClear;
 import com.example.dmaprojecttest2.db.DbReport;
 
 import java.util.ArrayList;
@@ -91,7 +93,7 @@ public class MenuFragment extends Fragment {
                     if(Integer.parseInt(MainActivity.fetchTypeResult.get(i)[1]) == 0){
                         imageId = getContext().getResources().getIdentifier("plast_metal_green", "drawable", getContext().getPackageName());
                     } else {
-                        imageId = getContext().getResources().getIdentifier("plasta_metal_red", "drawable", getContext().getPackageName());
+                        imageId = getContext().getResources().getIdentifier("plast_metal_red", "drawable", getContext().getPackageName());
                     }
                     break;
                 case "glas":
@@ -136,12 +138,16 @@ public class MenuFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(types, images, new ClickListener() {
             @Override
             public void onPositionClicked(int position) {
-                //need to add if statement for when dumpsterType is full
-                dumpsterType = types.get(position);
-                new DbReport(userId,dumpsterId,dumpsterType).execute();
-                Toast.makeText(getContext(), "Report sent for " + dumpsterType, Toast.LENGTH_SHORT).show();
+                if(Integer.parseInt(MainActivity.fetchTypeResult.get(position)[1]) == 0){
+                    dumpsterType = types.get(position);
+                    new DbReport(userId,dumpsterId,dumpsterType).execute();
+                    Toast.makeText(getContext(), "Report sent for " + dumpsterType, Toast.LENGTH_SHORT).show();
+                } else {
+                    dumpsterType = types.get(position);
+                    new DbClear(userId,dumpsterId,dumpsterType).execute();
+                    Toast.makeText(getContext(), "Clear sent for " + dumpsterType, Toast.LENGTH_SHORT).show();
+                }
             }
-
         });
 
         recyclerView.setAdapter(adapter);

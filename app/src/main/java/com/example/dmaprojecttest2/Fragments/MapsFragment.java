@@ -85,7 +85,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         //coordinates for starting position of map... should be based on phone position
         LatLng camStart = new LatLng(57.047692,9.931233);
-        MapsFragment.map.moveCamera(CameraUpdateFactory.newLatLngZoom(camStart, 16));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(camStart, 16));
 
         DbFetchAll asyncTask = new DbFetchAll();
         asyncTask.execute();

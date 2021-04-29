@@ -1,5 +1,7 @@
 package com.example.dmaprojecttest2.Adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dmaprojecttest2.Fragments.MapsFragment;
+import com.example.dmaprojecttest2.Fragments.MenuFragment;
 import com.example.dmaprojecttest2.Interface.ClickListener;
+import com.example.dmaprojecttest2.MainActivity;
 import com.example.dmaprojecttest2.R;
 
 import java.lang.ref.WeakReference;
@@ -40,6 +45,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.type.setText(types.get(position));
         holder.img.setImageResource(images.get(position));
+        int red = Color.RED;
+        int green = Color.GREEN;
+        if(Integer.parseInt(MainActivity.fetchTypeResult.get(position)[1]) == 0){
+            holder.reportButton.setBackgroundTintList(ColorStateList.valueOf(green));
+            holder.reportButton.setText("Report full");
+        } else {
+            holder.reportButton.setBackgroundTintList(ColorStateList.valueOf(red));
+            holder.reportButton.setText("Report clear");
+        }
     }
 
     @Override

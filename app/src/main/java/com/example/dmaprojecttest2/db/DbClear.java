@@ -1,30 +1,12 @@
 package com.example.dmaprojecttest2.db;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.dmaprojecttest2.Fragments.MenuFragment;
-import com.example.dmaprojecttest2.MainActivity;
-import com.example.dmaprojecttest2.R;
-import com.google.gson.JsonObject;
-
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.logging.Logger;
 
-import static java.security.AccessController.getContext;
-
-public class DbReport extends AsyncTask<Void, Void, Void> {
+public class DbClear extends AsyncTask<Void, Void, Void> {
 
     String userId;
     int dumpsterId;
@@ -32,7 +14,7 @@ public class DbReport extends AsyncTask<Void, Void, Void> {
     String url;
 
     //gets the parameters for url
-    public DbReport(String userId, int dumpsterId, String dumpsterType) {
+    public DbClear(String userId, int dumpsterId, String dumpsterType) {
         this.userId = userId;
         this.dumpsterId = dumpsterId;
         this. dumpsterType = dumpsterType;
@@ -42,7 +24,7 @@ public class DbReport extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         HttpURLConnection urlConnection = null;
-        url = "https://solskov-jensen.dk/API/update.api.php?UserID=" + userId + "&DumpsterID=" + dumpsterId + "&DumpsterType=" + dumpsterType;
+        url = "https://solskov-jensen.dk/API/clear.api.php?UserID=" + userId + "&DumpsterID=" + dumpsterId + "&DumpsterType=" + dumpsterType;
 
         try {
             URL urlAddress = new URL(url);

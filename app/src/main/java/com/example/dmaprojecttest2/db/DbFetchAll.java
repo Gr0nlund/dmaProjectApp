@@ -124,33 +124,28 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
         }
 
         for(int i = 0; i < arr.size(); i++) {
-
-            LatLng latLng = new LatLng(arr.get(i)[1],arr.get(i)[2]);
+            LatLng latLng = new LatLng(arr.get(i)[1], arr.get(i)[2]);
             BitmapDescriptor b;
+            //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(arr.size()), Toast.LENGTH_SHORT).show();
 
             //finds the correct color for marker icon
-            if((int) arr.get(i)[3] == 0){
+            if ((int) arr.get(i)[3] == 0) {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster_green);
-            } else if(arr.get(i)[3] == 1){
+            } else if ((int) arr.get(i)[3] == 1) {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster_yellow);
-            } else if(arr.get(i)[3] == 2){
+            } else if ((int) arr.get(i)[3] == 2) {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster_red);
             } else {
                 //defaults dumpster to black
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster);
             }
 
+            //adds marker to map
             MapsFragment.map.addMarker(new MarkerOptions()
+                    .position(latLng)
                     .icon(b)
                     .title(String.valueOf((int) arr.get(i)[0]))
-                    .anchor(0.5f,0.5f)
-                    .position(latLng));
-            /*MapsFragment.map.addGroundOverlay(new GroundOverlayOptions()
-                    .image(b)
-                    //.positionFromBounds(new LatLngBounds(latLng,latLng))
-                    //.position(latLng,100)
-                    .position(latLng, 50)
-                    );*/
+                    .anchor(0.5f, 0.5f));
         }
     }
 }
