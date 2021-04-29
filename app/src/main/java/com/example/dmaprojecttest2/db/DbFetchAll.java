@@ -71,7 +71,7 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
                 String lng = j.getString("Dumpster_Longtitude");
                 String lat = j.getString("Dumpster_Latitude");
                 String full = j.getString("Dumpster_Full");
-                String[] newRow = {id,lat,lng,full};
+                String[] newRow = {id,lng,lat,full};
                 result.add(newRow);
             }
 
@@ -99,34 +99,40 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
         }
 
         //checks amount of full types at a site and creates a new List<Double[]> to make marker creation easier
-        for(int id = 1; id <= maxId; id++){
+        for(int id = 1; id < maxId+1; id++){
             int fullAmount = 0;
             int totalTypeAmount = 0;
+            double lat = 0;
+            double lng = 0;
             for(int i = 0; i < result.size(); i++){
                 if(Integer.parseInt(result.get(i)[0]) == id && Integer.parseInt(result.get(i)[3]) == 1){
                     fullAmount++;
                 }
                 if(Integer.parseInt(result.get(i)[0]) == id){
                     totalTypeAmount++;
+                    lat = Double.parseDouble(result.get(i)[1]);
+                    lng = Double.parseDouble(result.get(i)[2]);
                 }
             }
             //only adds a dumpster once with amount of fullness/color
             if(fullAmount == 0){
-                double[] row = {id,Double.parseDouble(result.get(id)[2]),Double.parseDouble(result.get(id)[1]),0};
+                double[] row = {id,lat,lng,0};
                 arr.add(row);
             } else if(fullAmount > 0 && fullAmount < totalTypeAmount){
-                double[] row = {id,Double.parseDouble(result.get(id)[2]),Double.parseDouble(result.get(id)[1]),1};
+                double[] row = {id,lat,lng,1};
                 arr.add(row);
             } else if(fullAmount == totalTypeAmount){
-                double[] row = {id,Double.parseDouble(result.get(id)[2]),Double.parseDouble(result.get(id)[1]),2};
+                double[] row = {id,lat,lng,2};
                 arr.add(row);
             }
+
+            Toast.makeText(MapsFragment.view.getContext(), String.valueOf(id) + " - " + Double.parseDouble(result.get(id)[1]), Toast.LENGTH_SHORT).show();
         }
 
         for(int i = 0; i < arr.size(); i++) {
             LatLng latLng = new LatLng(arr.get(i)[1], arr.get(i)[2]);
             BitmapDescriptor b;
-            //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(arr.size()), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(arr.get(i)[1]), Toast.LENGTH_SHORT).show();
 
             //finds the correct color for marker icon
             if ((int) arr.get(i)[3] == 0) {

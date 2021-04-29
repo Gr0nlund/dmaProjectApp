@@ -97,7 +97,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         //gets data from database. Everything else is done in the onPostExecute method
         DbFetchType asyncTask = new DbFetchType(marker.getTitle());
         MenuFragment.dumpsterId = Integer.parseInt(marker.getTitle());
-        Toast.makeText(MapsFragment.view.getContext(), marker.getTitle(), Toast.LENGTH_LONG).show();
+        Toast.makeText(MapsFragment.view.getContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
         asyncTask.execute();
 
         return true;
