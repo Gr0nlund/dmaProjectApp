@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">dmaProjectTest2</string>
+    <string name="maps_api_key">AIzaSyCybyBGwOuU3218Wh_4ixrK3ZYZPT-giCc</string>
 
     <string-array name="SortingTypes">
         <item>Restaffald</item>

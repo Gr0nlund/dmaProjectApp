@@ -126,7 +126,7 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
                 arr.add(row);
             }
 
-            Toast.makeText(MapsFragment.view.getContext(), String.valueOf(id) + " - " + Double.parseDouble(result.get(id)[1]), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(id) + " - " + Double.parseDouble(result.get(id)[1]), Toast.LENGTH_SHORT).show();
         }
 
         for(int i = 0; i < arr.size(); i++) {
@@ -135,7 +135,7 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
             //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(arr.get(i)[1]), Toast.LENGTH_SHORT).show();
 
             //finds the correct color for marker icon
-            if ((int) arr.get(i)[3] == 0) {
+            /*if ((int) arr.get(i)[3] == 0) {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster_green);
             } else if ((int) arr.get(i)[3] == 1) {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster_yellow);
@@ -144,6 +144,17 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
             } else {
                 //defaults dumpster to black
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster);
+            }*/
+
+            if ((int) arr.get(i)[3] == 0) {
+                b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.trash_green);
+            } else if ((int) arr.get(i)[3] == 1) {
+                b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.trash_yellow);
+            } else if ((int) arr.get(i)[3] == 2) {
+                b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.trash_red);
+            } else {
+                //defaults dumpster to black
+                b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.trash);
             }
 
             //adds marker to map
