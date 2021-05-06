@@ -31,7 +31,7 @@ import static com.example.dmaprojecttest2.Fragments.MapsFragment.view;
 import static java.security.AccessController.getContext;
 
 public class DbFetchType extends AsyncTask<String,Void,List<String[]>> {
-    //List<String[]> result = new ArrayList<>();
+
     String data;
     String dumpsterId;
 
@@ -87,8 +87,6 @@ public class DbFetchType extends AsyncTask<String,Void,List<String[]>> {
     @Override
     public void onPostExecute(List<String[]> result) {
         MainActivity.fetchTypeResult = result;
-
-        //Toast.makeText(view.getContext(), result.get(0)[0], Toast.LENGTH_SHORT).show();
 
         FragmentActivity activity = (FragmentActivity) view.getContext();
         FragmentManager manager = activity.getSupportFragmentManager();

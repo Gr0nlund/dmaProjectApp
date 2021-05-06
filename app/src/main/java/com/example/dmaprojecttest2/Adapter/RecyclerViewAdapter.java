@@ -81,9 +81,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View v) {
-            /*if (reportButton.getId() == v.getId()) {
-                Toast.makeText(v.getContext(), "REPORT PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-            }*/
             listenerRef.get().onPositionClicked(getAdapterPosition());
         }
     }
