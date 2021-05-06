@@ -29,8 +29,6 @@ import java.util.List;
 
 public class MenuFragment extends Fragment {
 
-    //int[] images1 = {R.drawable.restaffald,R.drawable.papir_pap,R.drawable.plast_metal,R.drawable.glas,R.drawable.minielektronik,R.drawable.stort_affald,R.drawable.elpaerer,R.drawable.farligt_affald,R.drawable.batterier};
-    //private final String[] types1 = {"Restaffald","Papir & pap","Plast & metal","Glas","Minielektronik","Stort affald","Elpærer","Farligt affald","Batterier"};
     private List<String> types = new ArrayList<>();
     private List<Integer> images = new ArrayList<>();
 

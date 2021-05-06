@@ -91,30 +91,33 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
         List<double[]> arr = new ArrayList<>();
         int maxId = 0;
 
-        //finds the max id value
+        //finds the max id value of marker
         for (int i = 0; i < result.size(); i++) {
             if (Integer.parseInt(result.get(i)[0]) > maxId) {
                 maxId = Integer.parseInt(result.get(i)[0]);
             }
         }
 
-        //checks amount of full types at a site and creates a new List<Double[]> to make marker creation easier
+        //checks amount of full types at a site(id) and creates a new List<Double[]> to make marker creation easier
         for(int id = 1; id < maxId+1; id++){
             int fullAmount = 0;
             int totalTypeAmount = 0;
             double lat = 0;
             double lng = 0;
+            //looping through all elements in database query result
             for(int i = 0; i < result.size(); i++){
+                //checks for fullness
                 if(Integer.parseInt(result.get(i)[0]) == id && Integer.parseInt(result.get(i)[3]) == 1){
                     fullAmount++;
                 }
+                //gets total amount of sorting types and latLng
                 if(Integer.parseInt(result.get(i)[0]) == id){
                     totalTypeAmount++;
                     lat = Double.parseDouble(result.get(i)[1]);
                     lng = Double.parseDouble(result.get(i)[2]);
                 }
             }
-            //only adds a dumpster once with amount of fullness/color
+            //only adds a dumpster to arr once with amount of fullness/color
             if(fullAmount == 0){
                 double[] row = {id,lat,lng,0};
                 arr.add(row);
@@ -129,10 +132,10 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
             //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(id) + " - " + Double.parseDouble(result.get(id)[1]), Toast.LENGTH_SHORT).show();
         }
 
+        //loop creating a marker for each element in arr
         for(int i = 0; i < arr.size(); i++) {
             LatLng latLng = new LatLng(arr.get(i)[1], arr.get(i)[2]);
             BitmapDescriptor b;
-            //Toast.makeText(MapsFragment.view.getContext(), String.valueOf(arr.get(i)[1]), Toast.LENGTH_SHORT).show();
 
             //finds the correct color for marker icon
             /*if ((int) arr.get(i)[3] == 0) {
@@ -146,6 +149,7 @@ public class DbFetchAll extends AsyncTask<String,Void, List<String[]>> {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.ic_dumpster);
             }*/
 
+            //uses android icon instead of custom icon to make clickable area better
             if ((int) arr.get(i)[3] == 0) {
                 b = MapsFragment.bitmapDescriptorFromVector(MapsFragment.view.getContext(), R.drawable.trash_green);
             } else if ((int) arr.get(i)[3] == 1) {

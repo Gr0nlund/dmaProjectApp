@@ -73,13 +73,86 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        //code below is used for getting phone location data
         // Construct a PlacesClient
         Places.initialize(getContext(), getString(R.string.maps_api_key));
         PlacesClient placesClient = Places.createClient(this.getContext());
 
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
+    }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        try{
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapsView);
+            mapFragment.getMapAsync(MapsFragment.this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mapView = view.findViewById(R.id.mapsView);
+
+        if(mapView != null){
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(getContext());
+        map = googleMap;
+
+        googleMap.setOnMarkerClickListener(this);
+
+        //coordinates for starting position of map used instead of phone location for prototype purposes
+        LatLng camStart = new LatLng(57.047692,9.931233);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(camStart, 16));
+
+        // Turn on the My Location layer and the related control on the map.
+        //updateLocationUI();
+
+        // Get the current location of the device and set the position of the map.
+        //getDeviceLocation();
+
+        //fetches marker data from database
+        DbFetchAll asyncTask = new DbFetchAll();
+        asyncTask.execute();
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        //gets data from database. Everything else is done in the onPostExecute method
+        DbFetchType asyncTask = new DbFetchType(marker.getTitle());
+        MenuFragment.dumpsterId = Integer.parseInt(marker.getTitle());
+        Toast.makeText(MapsFragment.view.getContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+        asyncTask.execute();
+
+        return true;
+    }
+
+    //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon
+    //needed to get vector icon from res/drawable
+    public static BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     //all get location code adapted from https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
@@ -192,77 +265,5 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         //new LatLng(location.getLatitude(), location.getLongitude()), 16));
 
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_maps, container, false);
-
-        try{
-            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapsView);
-            mapFragment.getMapAsync(MapsFragment.this);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mapView = view.findViewById(R.id.mapsView);
-
-        if(mapView != null){
-            mapView.onCreate(null);
-            mapView.onResume();
-            mapView.getMapAsync(this);
-        }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(getContext());
-        map = googleMap;
-
-        googleMap.setOnMarkerClickListener(this);
-
-        //coordinates for starting position of map... should be based on phone position
-        LatLng camStart = new LatLng(57.047692,9.931233);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(camStart, 16));
-
-        // Turn on the My Location layer and the related control on the map.
-        updateLocationUI();
-
-        // Get the current location of the device and set the position of the map.
-        //getDeviceLocation();
-
-
-        DbFetchAll asyncTask = new DbFetchAll();
-        asyncTask.execute();
-
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        //gets data from database. Everything else is done in the onPostExecute method
-        DbFetchType asyncTask = new DbFetchType(marker.getTitle());
-        MenuFragment.dumpsterId = Integer.parseInt(marker.getTitle());
-        Toast.makeText(MapsFragment.view.getContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
-        asyncTask.execute();
-
-        return true;
-    }
-
-    //adapted from https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon
-    //needed to get vector icon from res/drawable
-    public static BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
 }
+
