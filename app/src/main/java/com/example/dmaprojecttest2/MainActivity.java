@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //from https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
+        //get unique id of android device
         userId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         getSupportFragmentManager()
@@ -39,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    public static void createMenuFragment(View view) throws MalformedURLException {
+    public static void createMenuFragment(View view) {
         //creates the menu and places it in frameLayout
-        //creating the menuFragment should take parameters for the specific site
         FragmentActivity activity = (FragmentActivity)view.getContext();
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft2 = manager.beginTransaction();

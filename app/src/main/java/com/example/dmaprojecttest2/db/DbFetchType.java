@@ -94,10 +94,6 @@ public class DbFetchType extends AsyncTask<String,Void,List<String[]>> {
         if (manager.findFragmentById(R.id.frameLayout_menu) != null) {
             MainActivity.destroyMenuFragment(view);
         }
-        try {
-            MainActivity.createMenuFragment(view);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        MainActivity.createMenuFragment(view);
     }
 }
