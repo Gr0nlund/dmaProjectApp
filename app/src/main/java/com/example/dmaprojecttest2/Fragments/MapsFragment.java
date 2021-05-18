@@ -53,16 +53,16 @@ import static android.provider.SettingsSlicesContract.KEY_LOCATION;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
+    //private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     public static View view;
     public static GoogleMap map;
     MapView mapView;
-    public Context c = getActivity();
-    private boolean locationPermissionGranted = false;
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    Location lastKnownLocation;
-    private static final String KEY_CAMERA_POSITION = "camera_position";
-    private static final String KEY_LOCATION = "location";
+    //public Context c = getActivity();
+    //private boolean locationPermissionGranted = false;
+    //private FusedLocationProviderClient fusedLocationProviderClient;
+    //Location lastKnownLocation;
+    //private static final String KEY_CAMERA_POSITION = "camera_position";
+    //private static final String KEY_LOCATION = "location";
 
 
     public MapsFragment(){
@@ -75,11 +75,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
         //code below is used for getting phone location data
         // Construct a PlacesClient
-        Places.initialize(getContext(), getString(R.string.maps_api_key));
-        PlacesClient placesClient = Places.createClient(this.getContext());
+        //Places.initialize(getContext(), getString(R.string.maps_api_key));
+        //PlacesClient placesClient = Places.createClient(this.getContext());
 
         // Construct a FusedLocationProviderClient.
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
+        //fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
     }
 
     @Nullable
@@ -155,13 +155,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    //all get location code adapted from https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
+    /*//all get location code adapted from https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
     private void getLocationPermission() {
-        /*
+        *//*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
-         */
+         *//*
         if (ContextCompat.checkSelfPermission(this.getContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -210,10 +210,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     }
 
     private void getDeviceLocation() {
-        /*
+        *//*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
-         */
+         *//*
         LatLng defaultLocation = new LatLng(57.047692,9.931233);
 
         try {
@@ -264,6 +264,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(
         //new LatLng(location.getLatitude(), location.getLongitude()), 16));
 
-    }
+    }*/
 }
 
