@@ -1,0 +1,125 @@
+.table {
+	border-radius: 3px;
+	padding-top: 50rem;
+	position: relative;
+
+	&-menu {
+		padding: 15rem 0;
+		position: relative;
+	}
+
+	&-container {
+		position: absolute;
+		top: 60%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-height: 50vh;
+		overflow-x: scroll;
+		background-color: rgba(240, 240, 240, 0.753);
+		border-radius: 3px;
+		box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+		margin-bottom: 7.5rem;
+		padding: 1.5rem;
+
+		&-vertical {
+			position: absolute;
+			top: 60%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 90%;
+			background-color: rgba(240, 240, 240, 0.753);
+			border-radius: 3px;
+			padding: 1.5rem;
+			max-height: 50vh;
+			overflow-x: scroll;
+		}
+	}
+
+	&-vertical {
+		opacity: .7;
+		margin: 0;
+		width: 100%;
+		
+
+		&__body {
+			width: 100%;
+		}
+
+		& th {
+			background-color: #4644449a;
+			width: 30%;
+		}
+
+		& td {
+			width: 70%;
+		}
+
+		& th,
+		& td {
+			background-color: #9999999a;
+			border-bottom: none;
+			color: black;
+			padding: 0;
+			height: 4rem;
+		}
+
+		& th:not(:last-child),
+		& td:not(:last-child) {
+			border-right: none;
+		}
+	}
+
+	&-horizontal{
+		opacity: .7;
+		margin: 0;
+		width: 100%;
+		table-layout: fixed;
+
+		&__body {
+			width: 100%;
+		}
+
+		& th {
+			width: 30%;
+		}
+
+		& td {
+			width: 70%;
+		}
+
+		& th,
+		& td {
+			background-color: #9999999a;
+			border-bottom: none;
+			color: black;
+			padding: 0;
+			height: 4rem;
+		}
+
+		& th:not(:last-child),
+		& td:not(:last-child) {
+			border-right: none;
+		}
+	}
+}
+
+th {
+	background-color: rgba($color-black, 0.8);
+}
+
+th,
+td {
+	width: 1%;
+	text-align: center;
+	border-bottom: 1px solid $color-black;
+}
+
+th:not(:last-child),
+td:not(:last-child) {
+	border-right: 1px solid $color-black;
+}
+
+tr:last-child {
+	border-bottom: none;
+}

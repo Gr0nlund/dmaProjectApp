@@ -1,0 +1,15 @@
+.composition {
+	position: relative;
+	&__photo {
+		width: 75%;
+		box-sizing: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+		border-radius: 2px;
+		z-index: 10;
+		position: relative;
+		outline-offset: 2rem;
+
+		&--p1 {
+			top: -2rem;
+		}
+	}
+}
